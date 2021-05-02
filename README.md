@@ -1,2 +1,2 @@
 # Calculadora
- Implementação de uma calculadora que realize as operações soma, subtração, multiplicação, divisão e calculo de resto, fazendo uso de HTML, CSS e JavaScript.
+ Uma calculadora que realize as operações de soma, subtração, multiplicação, divisão e resto, fazendo uso de HTML, CSS e JavaScript.
