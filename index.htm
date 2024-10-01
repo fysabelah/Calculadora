@@ -1,37 +1,52 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora</title>
-    <link rel="stylesheet" href="calculadora.css">
+    <link rel="stylesheet" href="calculator-style.css">
 </head>
 
 <body>
-    <div class="corpo">
+    <main class="calculator">
         <h1>CALCULADORA</h1>
-        <div class="display"></div>
-        <div class="botoes">
-            <button class="bt1"> 1 </button>
-            <button class="bt2"> 2 </button>
-            <button class="bt3"> 3 </button>
-            <button class="btAdd"> + </button>
-            <button class="bt4"> 4 </button>
-            <button class="bt5"> 5 </button>
-            <button class="bt6"> 6 </button>
-            <button class="btSub"> - </button>
-            <button class="bt7"> 7 </button>
-            <button class="bt8"> 8 </button>
-            <button class="bt9"> 9 </button>
-            <button class="btMul"> * </button>
-            <button class="btReset"> C </button>
-            <button class="bt0"> 0 </button>
-            <button class="btPonto"> % </button>
-            <button class="btDiv"> / </button>
-            
-        </div>
-        <button  class="btResut"> = </button>
+        <section class="display-section">
+            <div class="display" aria-live="polite"></div>
+        </section>
+        <section class="buttons-section">
+            <div class="buttons-div">
+                <button class="button-operation-ce" aria-label="Apagar">CE</button>
+                <button class="button-operation-sqrt" aria-label="Raiz Quadrada">&radic;</button>
+                <button class="button-operation-percentage" aria-label="Porcentagem">%</button>
+                <button class="button-operation-divide" aria-label="Divisão">&divide;</button>
 
-    </div>
+                <button class="button-number-7" aria-label="Número 7">7</button>
+                <button class="button-number-8" aria-label="Número 8">8</button>
+                <button class="button-number-9" aria-label="Número 9">9</button>
+                <button class="button-operation-multiply" aria-label="Multiplicação">&times;</button>
+
+                <button class="button-number-4" aria-label="Número 4">4</button>
+                <button class="button-number-5" aria-label="Número 5">5</button>
+                <button class="button-number-6" aria-label="Número 6">6</button>
+                <button class="button-operation-subtract" aria-label="Subtração">-</button>
+                <div class="div-with-odd-number-buttons">
+                    <div class="left">
+                        <button class="button-number-1" aria-label="Número 1">1</button>
+                        <button class="button-number-2" aria-label="Número 2">2</button>
+                        <button class="button-number-3" aria-label="Número 3">3</button>
+                        <button class="button-reset" aria-label="Limpar">C</button>
+                        <button class="button-dot" aria-label="Ponto">.</button>
+                        <button class="button-number-0" aria-label="Número 0">0</button>
+                    </div>
+                    <div class="right">
+                        <button class="button-operation-add" aria-label="Adição">+</button>
+                    </div>
+                </div>
+            </div>
+            <button class="button-result" aria-label="Igual">=</button>
+        </section>
+    </main>
+    <script src="calculator-script.js"></script>
 </body>
-<script src="calculadora.js"></script>
 
 </html>
