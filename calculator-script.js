@@ -19,30 +19,29 @@ function getResult() {
     if (expression.length > 0) {
         expression = normalizeExpression(expression);
 
-        value = () => {
-            try {
-                console.log(expression);
+        const result = calculateExpression(expression);
 
-                return new Function('return ' + expression)();
-            } catch (error) {
-                alert('Não foi possível realizar cálculo! Verifique a expressão!');
-            }
+        if (result){
+            display.innerHTML = result % 1 === 0 ? result : result.toFixed(3);
         }
-
-        const result = value();
-        
-        display.innerHTML = result % 1 === 0 ? result : result.toFixed(4);
     }
 }
 
-function normalizeExpression(expression) {
-    let operators = ['√', '%', '×', '÷', '-', '+'];
+function calculateExpression(expression) {
+    try {
+        return new Function('return ' + expression)();
+    } catch (error) {
+        alert('Não foi possível realizar cálculo! Verifique a expressão!');
+    }
+}
 
-    expression = expression.replaceAll('×', '*').replaceAll('÷', '/');
+function normalizeMultiplicationAndDivision(expression) {
+    return expression.replaceAll('×', '*').replaceAll('÷', '/');
+}
 
-    const tokens = expression.match(/(\d+(\.\d+)?|\D)/g);
-
+function normalizeSquareRoot(tokens, operators) {
     let sqrtIndex = tokens.indexOf('√');
+    
     while(sqrtIndex != -1) {
         tokens[sqrtIndex] = 'Math.sqrt(';
     
@@ -56,13 +55,33 @@ function normalizeExpression(expression) {
         sqrtIndex = tokens.indexOf('√');
     }
 
+    return tokens;
+}
+
+function normalizeExpression(expression) {
+    const operators = ['√', '%', '×', '÷', '-', '+'];
+
+    expression = normalizeMultiplicationAndDivision(expression);
+
+    let tokens = expression.match(/(\d+(\.\d+)?|\D)/g);
+
+    tokens = normalizeSquareRoot(tokens, operators);
+
+    tokens = normalizePercentage(tokens, operators);
+
     return tokens.join(" ");
+}
+
+function normalizePercentage(tokens, operators){
+    // todo falta implementar
+
+    return tokens;
 }
 
 function putValueOnDisplay(textContent) {
     let display = document.querySelector('.display');
     let expression = display.textContent ? display.textContent : '';
-    let operators = ['√', '%', '×', '÷', '-', '+'];
+    const operators = ['√', '%', '×', '÷', '-', '+'];
     let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     let clear = ["C", "CE"];
     
@@ -112,13 +131,19 @@ function clearOrDeleteLastCaracter(textContent, displaySelector, expression) {
     }
 }
 
-function addOperatorToExpression(textContent, expression, displaySelector, operators){
-    const tokens = expression.match(/(\d+(\.\d+)?|\D)/g);
-    const lastValueOnExpression = tokens ? tokens[tokens.length - 1] : '';
+function addOperatorToExpression(textContent, expression, displaySelector, operators) {
+    const tokens = expression?.match(/(\d+(\.\d+)?|\D)/g) || [];
+    const lastValue = tokens[tokens.length - 1];
 
-    if (textContent == '√' && lastValueOnExpression != '' && (!operators.includes(lastValueOnExpression) || lastValueOnExpression == '%')) {
+    if (!tokens.length) {
+        if (textContent === '√') displaySelector.textContent += textContent;
+        else alert('A expressão deve começar com um número ou raiz quadrada!');
+        return;
+    }
+
+    if (textContent === '√' && (lastValue === '%' || !operators.includes(lastValue))) {
         alert('Antes da raiz quadrada deve haver um operador! Deve ser diferente de %.');
-    } else {
+    } else if (!operators.includes(lastValue) || lastValue === '%' || (textContent === '√' && lastValue !== '√')) {
         displaySelector.textContent += textContent;
     }
 }
